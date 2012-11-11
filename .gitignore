@@ -1,18 +1,9 @@
-*.gem
-*.rbc
-.bundle
-.config
-coverage
-InstalledFiles
-lib/bundler/man
-pkg
-rdoc
+vendor/bundle/
+.bundle/
+coverage/
 spec/reports
-test/tmp
-test/version_tmp
-tmp
-
-# YARD artifacts
+*.log
 .yardoc
-_yardoc
-doc/
+*.gem
+yardoc/
+*~

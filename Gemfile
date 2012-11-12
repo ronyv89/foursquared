@@ -11,6 +11,7 @@ group :development do
   gem "ci_reporter"
   gem "simplecov-rcov"
   gem "rdiscount"
+  gem "webmock"
 end
 
 

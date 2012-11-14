@@ -1,7 +1,7 @@
 # Foursquared
+[![Build Status](https://travis-ci.org/ronyv89/foursquared.png)](https://travis-ci.org/ronyv89/foursquared)
 
-TODO: Write a gem description
-
+Simple client library for Foursquare API V2 with OAuth2 authentication
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -27,3 +27,4 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+

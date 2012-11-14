@@ -20,6 +20,8 @@ module Foursquared
   require 'foursquared/oauth/client'
   require 'foursquared/client'
   require 'json'
+  require 'foursquared/response/user'
+  require 'foursquared/response/photo'
   # require 'foursquare2/specials'
   # require 'foursquare2/settings'
   # require 'foursquare2/photos'

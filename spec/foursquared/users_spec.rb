@@ -50,21 +50,29 @@ describe Foursquared::Users do
                     contact:
                       email: "blahblah@blah.com"
                       facebook: "435463435"
-
                 }
-
     )
+
+
+  end
+  let(:leaderboard) do
+    
   end
   before :each do
 
-    stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestUser&v=20121112").
+    stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestUser&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => me.to_json, :headers => {})
   end
   describe "#user" do
-    
-    it "should have a common structure" do
-      
-      foursquared_test_client.user.keys.should include("meta", "notifications", "response")
+    it "should return a foursquared user response" do
+      foursquared_test_client.user.class.should == Foursquared::Response::User
     end
   end
+
+  # describe "#leaderboard" do
+  #   it "should return the 'self' user's leaderboard" do
+  #     foursquared_test_client.leaderboard.class.should == Foursquared::Response::Leaderboard
+  #   end
+  # end
+
 end

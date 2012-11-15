@@ -6,9 +6,16 @@ module Foursquared
         @response = response
       end
 
+      [:id, :relationship].each do |method_name|
+        define_method method_name do
+          response[method_name.to_s]
+        end
+      end
+
       def id
         response["id"]
       end
+
 
       def name
         [first_name, last_name].join(' ').strip
@@ -34,10 +41,6 @@ module Foursquared
         response["homeCity"]
       end
 
-      def relationship
-        response["relationship"]
-      end
-
       def pings
         fetch unless response.has_key?("pings")
         response["pings"]
@@ -55,15 +58,15 @@ module Foursquared
       def twitter
         contact["twitter"]
       end
-      
+
       def facebook
         contact["facebook"]
       end
-      
+
       def twitter?
         !twitter.blank?
       end
-      
+
       def facebook?
         !facebook.blank?
       end

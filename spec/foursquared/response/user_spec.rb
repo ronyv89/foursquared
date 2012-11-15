@@ -1,7 +1,8 @@
-require 'foursquared/users'
-require 'foursquared/client'
 require 'spec_helper'
-describe Foursquared::Users do
+require 'foursquared/response/user'
+require 'foursquared/client'
+
+describe Foursquared::Response::User do
   let(:me) do
     YAML.load(%{
       meta:
@@ -52,26 +53,19 @@ describe Foursquared::Users do
                       facebook: "435463435"
                 }
     )
-
-
   end
-  let(:leaderboard) do
-
-  end
+  let(:test_user) { foursquared_test_client.user }
   before :each do
     stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestUser&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => me.to_json, :headers => {})
   end
-  describe "#user" do
-    it "should return a foursquared user response" do
-      foursquared_test_client.user.class.should == Foursquared::Response::User
-    end
+  it "should get user's id" do
+    test_user.id.should == "12345678"
   end
 
-  # describe "#leaderboard" do
-  #   it "should return the 'self' user's leaderboard" do
-  #     foursquared_test_client.leaderboard.class.should == Foursquared::Response::Leaderboard
-  #   end
-  # end
+  it "should give the relationship between 'me' and the current user" do
+    test_user.relationship.should == "self"
+  end
 
+  it "should "
 end

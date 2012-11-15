@@ -1,6 +1,6 @@
 module Foursquared
   module Users
-    # Get 
+    # Get
     def user(user_id=nil)
       get("/users/#{user_id ||'self'}")
     end

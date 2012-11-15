@@ -11,3 +11,4 @@ end if ENV["COVERAGE"]
 def foursquared_test_client
   Foursquared::Client.new("TestUser")
 end
+

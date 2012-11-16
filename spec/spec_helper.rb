@@ -9,6 +9,5 @@ SimpleCov.start do
 end if ENV["COVERAGE"]
 
 def foursquared_test_client
-  Foursquared::Client.new("TestUser")
+  Foursquared::Client.new("TestToken")
 end
-

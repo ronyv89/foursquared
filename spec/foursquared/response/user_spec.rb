@@ -7,10 +7,6 @@ describe Foursquared::Response::User do
     YAML.load(%{
       meta:
         code: 200
-      notifications:
-        type: "notificationTray"
-        item:
-          unreadCount: 0
       response:
         user:
           id: "12345678"
@@ -54,9 +50,9 @@ describe Foursquared::Response::User do
                 }
     )
   end
-  let(:test_user) { foursquared_test_client.user }
+  let(:test_user) { foursquared_test_client.user("self") }
   before :each do
-    stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestUser&v=#{Time.now.strftime("%Y%m%d")}").
+    stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => me.to_json, :headers => {})
   end
   it "should get user's id" do
@@ -64,8 +60,8 @@ describe Foursquared::Response::User do
   end
 
   it "should give the relationship between 'me' and the current user" do
+    
     test_user.relationship.should == "self"
-  end
 
-  it "should "
+  end
 end

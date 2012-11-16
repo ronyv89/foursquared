@@ -52,14 +52,12 @@ describe Foursquared::Users do
                       facebook: "435463435"
                 }
     )
-
-
   end
   let(:leaderboard) do
 
   end
   before :each do
-    stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestUser&v=#{Time.now.strftime("%Y%m%d")}").
+    stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => me.to_json, :headers => {})
   end
   describe "#user" do

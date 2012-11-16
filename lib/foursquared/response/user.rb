@@ -16,11 +16,6 @@ module Foursquared
         response["id"]
       end
 
-
-      def name
-        [first_name, last_name].join(' ').strip
-      end
-
       def first_name
         response["firstName"]
       end
@@ -29,8 +24,8 @@ module Foursquared
         response["lastName"]
       end
 
-      def photo
-        response["photo"]
+      def name
+        [first_name, last_name].join(' ').strip
       end
 
       def gender

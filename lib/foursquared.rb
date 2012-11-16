@@ -17,11 +17,13 @@ module Foursquared
 
   # require 'foursquare2/campaigns'
   require 'foursquared/users'
+  require 'foursquared/photos'
   require 'foursquared/oauth/client'
   require 'foursquared/client'
   require 'json'
   require 'foursquared/response/user'
   require 'foursquared/response/photo'
+  require 'foursquared/error'
   # require 'foursquare2/specials'
   # require 'foursquare2/settings'
   # require 'foursquare2/photos'

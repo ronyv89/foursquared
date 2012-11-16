@@ -2,7 +2,7 @@ module Foursquared
   module Response
     class Photo
       attr_reader :response
-      def initalize response
+      def initialize(response)
         @response = response
       end
 
@@ -10,15 +10,15 @@ module Foursquared
         define_method method_name do
           response[method_name.to_s]
         end
-      end 
+      end
 
       def created_at
         response["createdAt"]
       end
 
-      # def user
-      #   Foursquared::Response::User.new(response["user"]) if response["user"]
-      # end
+      def user
+        Foursquared::Response::User.new(response["user"]) if response["user"]
+      end
 
       def urls
         @urls = {

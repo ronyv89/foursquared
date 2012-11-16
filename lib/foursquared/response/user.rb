@@ -6,14 +6,10 @@ module Foursquared
         @response = response
       end
 
-      [:id, :relationship].each do |method_name|
+      [:id, :relationship, :gender, :contact, :bio, :type].each do |method_name|
         define_method method_name do
           response[method_name.to_s]
         end
-      end
-
-      def id
-        response["id"]
       end
 
       def first_name
@@ -28,10 +24,6 @@ module Foursquared
         [first_name, last_name].join(' ').strip
       end
 
-      def gender
-        response["gender"]
-      end
-
       def home_city
         response["homeCity"]
       end
@@ -41,50 +33,10 @@ module Foursquared
         response["pings"]
       end
 
-      def contact
-        fetch unless response.has_key?("contact")
-        response["contact"]
+      def photo
+        Foursquared::Response::Photo.new(response[:photo])
       end
 
-      def email
-        contact["email"]
-      end
-
-      def twitter
-        contact["twitter"]
-      end
-
-      def facebook
-        contact["facebook"]
-      end
-
-      def twitter?
-        !twitter.blank?
-      end
-
-      def facebook?
-        !facebook.blank?
-      end
-
-      def phone_number
-        contact["phone"]
-      end
-
-      def badge_count
-        fetch unless response.has_key?("badges")
-        response["badges"]["count"]
-      end
-
-      def mayorships
-        fetch unless response.has_key?("mayorships")
-        response["mayorships"]["items"]
-      end
-
-      def friends(options={})
-        get("users/#{id}/friends", options)["friends"]["items"].map do |item|
-          Foursquared::Response::User.new(@foursquare, item)
-        end
-      end
     end
   end
 end

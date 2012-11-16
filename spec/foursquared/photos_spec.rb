@@ -1,4 +1,4 @@
-require 'spec_helper'
+  require 'spec_helper'
 require 'foursquared/response/user'
 require 'foursquared/response/photo'
 require 'foursquared/client'

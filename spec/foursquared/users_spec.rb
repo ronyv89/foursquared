@@ -1,4 +1,5 @@
 require 'foursquared/users'
+require 'foursquared/photos'
 require 'foursquared/client'
 require 'spec_helper'
 describe Foursquared::Users do

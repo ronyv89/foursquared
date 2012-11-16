@@ -4,14 +4,14 @@ require 'foursquared/response/photo'
 require 'foursquared/client'
 require 'pp'
 describe Foursquared::Response::Photo do
-  
+
   let(:photo) do
     YAML.load(%{
       meta:
         code: 200
       response:
         photo:
-          id: "4d0fb8162d39a340637dc42b"
+          id: "12345"
           createdAt: 1292875798
           source:
             name: "foursquare for iPhone"
@@ -31,19 +31,40 @@ describe Foursquared::Response::Photo do
       }
     )
   end
+  subject {foursquared_test_client.photo(12345)}
 
   before :each do
     stub_request(:get, "https://api.foursquare.com/v2/photos/12345?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => photo.to_json, :headers => {})
-    @test_photo = foursquared_test_client.photo(12345)
   end
+
   it "should return the photo id" do
-    @test_photo.id.should == "4d0fb8162d39a340637dc42b"
+    subject.id.should == "12345"
+  end
+
+  it "should return photo url's prefix" do
+    subject.prefix.should == "https://irs0.4sqi.net/img/general/"
   end
 
   it "should return photo url's suffix" do
-    #p test_photo
-    #subject.prefix.should == "https://irs0.4sqi.net/img/general/"
+    subject.suffix.should == "/UYU54GYOCURPAUYXH5V2U3EOM4DCX4VZPT3YOMN43H555KU2.jpg"
   end
+
+  it "should return the width of the photo" do
+    subject.width.should == 540
+  end
+
+  it "should return the height of the photo" do
+    subject.height.should == 720
+  end
+
+  it "should return the visibility of the photo" do
+    subject.visibility.should == "public"
+  end
+
+  it "should return the user associated with the photo" do
+    subject.user.should be_a(Foursquared::Response::User)
+  end
+
 
 end

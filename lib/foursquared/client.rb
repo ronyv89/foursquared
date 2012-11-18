@@ -7,14 +7,18 @@ module Foursquared
     include HTTParty
     include Users
     include Photos
+    include Lists
     base_uri 'https://api.foursquare.com/v2'
     format :json
+
+    
 
     def initialize access_token
       @access_token = access_token
       self.class.default_params :oauth_token => access_token
     end
 
+    private
     def get url, options={}
       options.merge!({:v => Time.now.strftime("%Y%m%d")}) unless options[:v]
       response = self.class.get(url, {:query => options}).parsed_response
@@ -25,10 +29,11 @@ module Foursquared
       end
     end
 
-    # def post url, options={}
-    #   options.merge!({:v => Time.now.strftime("%Y%m%d")}) unless options[:v]
-    #   self.class.post(url, options).parsed_response
-    # end
+    def post url, options={}
+      options.merge!({:v => Time.now.strftime("%Y%m%d")}) unless options[:v]
+      self.class.post(url, options).parsed_response
+    end
+
 
   end
 end

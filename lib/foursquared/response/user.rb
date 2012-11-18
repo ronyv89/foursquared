@@ -12,13 +12,11 @@ module Foursquared
         end
       end
 
-      def first_name
-        response["firstName"]
-      end
-
-      def last_name
-        response["lastName"]
-      end
+      [:firstName, :lastName, :homeCity].each do |method_name|
+        define_method method_name.to_usym do
+          response[method_name.to_s]
+        end
+      end   
 
       def name
         [first_name, last_name].join(' ').strip
@@ -37,6 +35,11 @@ module Foursquared
         Foursquared::Response::Photo.new(response[:photo])
       end
 
+      def friends
+        response["friends"]["items"].collect{|friend| Foursquared::Response::User.new(friend)}
+      end
+
     end
   end
+
 end

@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 directory = File.expand_path(File.dirname(__FILE__))
-
+require 'core_ext/symbol'
 module Foursquared
   class << self
 
@@ -17,17 +17,17 @@ module Foursquared
   end
 
   # require 'foursquare2/campaigns'
-
   require 'foursquared/users'
   require 'foursquared/photos'
   require 'foursquared/tips'
+  require 'foursquared/lists'
   require 'foursquared/oauth/client'
   require 'foursquared/client'
   require 'foursquared/response/user'
   require 'foursquared/response/photo'
   require 'foursquared/response/tip'
   require 'foursquared/error'
-
+  
   # require 'foursquare2/specials'
   # require 'foursquare2/settings'
   # require 'foursquare2/photos'
@@ -42,3 +42,5 @@ module Foursquared
 
 
 end
+
+include Foursquared::Response

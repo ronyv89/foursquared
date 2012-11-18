@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'foursquared/response/user'
 require 'foursquared/client'
-
+require 'core_ext/symbol'
 describe Foursquared::Response::User do
   let(:me) do
     YAML.load(%{
@@ -55,13 +55,21 @@ describe Foursquared::Response::User do
     stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => me.to_json, :headers => {})
   end
+
   it "should get user's id" do
     test_user.id.should == "12345678"
   end
 
-  it "should give the relationship between 'me' and the current user" do
-    
-    test_user.relationship.should == "self"
-
+  it "should return user's firstname" do
+    test_user.first_name.should == "Rony"
   end
+
+  it "shoyld return user's last name" do
+    test_user.last_name.should == "Varghese"
+  end
+
+  it "should give the relationship between 'me' and the current user" do
+    test_user.relationship.should == "self"
+  end
+  
 end

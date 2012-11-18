@@ -37,3 +37,4 @@ module Foursquared
     end
   end
 end
+

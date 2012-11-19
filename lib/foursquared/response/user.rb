@@ -16,7 +16,7 @@ module Foursquared
         define_method method_name.to_usym do
           response[method_name.to_s]
         end
-      end   
+      end
 
       def name
         [first_name, last_name].join(' ').strip
@@ -36,7 +36,12 @@ module Foursquared
       end
 
       def friends
-        response["friends"]["items"].collect{|friend| Foursquared::Response::User.new(friend)}
+        @friends = []
+        response["friends"]["groups"].each do |group|
+          group["items"] = group["items"].collect{|friend| Foursquared::Response::User.new(friend)}
+          @friends << group
+        end
+        @friends
       end
 
     end

@@ -12,6 +12,7 @@ group :development do
   gem "simplecov-rcov"
   gem "rdiscount"
   gem "webmock"
+  gem "rspec_multi_matchers"
 end
 
 

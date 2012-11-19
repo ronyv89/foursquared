@@ -2,6 +2,8 @@ require "simplecov"
 require "simplecov-rcov"
 require 'foursquared'
 require 'webmock/rspec'
+require 'rspec_multi_matchers'
+
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start do
   add_filter "vendor"
@@ -10,4 +12,16 @@ end if ENV["COVERAGE"]
 
 def foursquared_test_client
   Foursquared::Client.new("TestToken")
+end
+
+class Array
+  def unique?
+    length == uniq.length
+  end
+
+  def method_missing name
+    if name.to_s =~ /^empty_or_array_of_(.+)\?/
+      empty? or (uniq.count == 1 and uniq[0].is_a?(Foursquared::Response.const_get($1.capitalize)))
+    end
+  end
 end

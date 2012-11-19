@@ -50,26 +50,38 @@ describe Foursquared::Response::User do
                 }
     )
   end
-  let(:test_user) { foursquared_test_client.user("self") }
+  subject { foursquared_test_client.user("self") }
   before :each do
     stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => me.to_json, :headers => {})
   end
 
   it "should get user's id" do
-    test_user.id.should == "12345678"
+    subject.id.should == "12345678"
   end
 
   it "should return user's firstname" do
-    test_user.first_name.should == "Rony"
+    subject.first_name.should == "Rony"
   end
 
   it "shoyld return user's last name" do
-    test_user.last_name.should == "Varghese"
+    subject.last_name.should == "Varghese"
   end
 
   it "should give the relationship between 'me' and the current user" do
-    test_user.relationship.should == "self"
+    subject.relationship.should == "self"
   end
-  
+
+  describe "#friends" do
+    it "should return the user's friends" do
+      subject.friends.should each { |friend|
+          friend["items"].should be_empty_or_array_of_user
+      }
+    end
+
+    it "should have different type of friends" do
+      subject.friends.collect{|friend| friend["type"]}.should be_unique
+    end
+  end
+
 end

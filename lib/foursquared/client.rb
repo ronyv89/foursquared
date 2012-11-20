@@ -1,24 +1,23 @@
 require 'httparty'
 
-module Foursquared 
-  
+module Foursquared
+
   class Client
     attr_accessor :access_token
     include HTTParty
     include Users
     include Photos
     include Lists
+    include Venues
     base_uri 'https://api.foursquare.com/v2'
     format :json
-
-    
 
     def initialize access_token
       @access_token = access_token
       self.class.default_params :oauth_token => access_token
     end
 
-    private
+
     def get url, options={}
       options.merge!({:v => Time.now.strftime("%Y%m%d")}) unless options[:v]
       response = self.class.get(url, {:query => options}).parsed_response

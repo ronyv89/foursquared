@@ -1,8 +1,9 @@
 module Foursquared
   module Response
     class Photo
-      attr_reader :response
-      def initialize(response)
+      attr_reader :client, :response
+      def initialize(client, response)
+        @client = client
         @response = response
       end
 

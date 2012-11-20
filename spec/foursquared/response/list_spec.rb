@@ -3,7 +3,7 @@ require 'foursquared/response/list'
 describe Foursquared::Response::List do
   let(:list) do
     YAML.load(%{
-      meta: 
+      meta:
         code: 200
       response:
         list:
@@ -32,6 +32,7 @@ describe Foursquared::Response::List do
   before :each do
     stub_request(:get, "https://api.foursquare.com/v2/lists/5073f878e4b023c59da80d39?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => list.to_json, :headers => {})
+
   end
 
   it "should return the list id" do
@@ -49,6 +50,7 @@ describe Foursquared::Response::List do
   end
 
   it "should return the timestamp the photo was created" do
-    Time.at(subject.created_at).should be_a(Time)
+    subject.created_at.should be_a(Time)
   end
+
 end

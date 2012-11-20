@@ -3,7 +3,7 @@ module Foursquared
     # Get
     def user(user_id=nil)
       response = get("/users/#{user_id ||'self'}")["response"]
-      @user = Foursquared::Response::User.new(response["user"])
+      @user = Foursquared::Response::User.new(self,response["user"])
     end
 
     def leaderboard(options={})

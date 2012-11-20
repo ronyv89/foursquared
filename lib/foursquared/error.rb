@@ -6,5 +6,9 @@ module Foursquared
       @detail = meta["errorDetail"]
       @type = meta["errorType"]
     end
+
+    def message
+      "Error: #{code}, #{type}, #{detail}"
+    end
   end
 end

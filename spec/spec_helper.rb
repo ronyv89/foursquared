@@ -20,7 +20,8 @@ class Array
   end
 
   def method_missing name
-    if name.to_s =~ /^empty_or_array_of_(.+)\?/
+    if name.to_s =~ /^empty_or_array_of_(.+)s\?$/
+      p uniq
       empty? or (uniq.count == 1 and uniq[0].is_a?(Foursquared::Response.const_get($1.capitalize)))
     end
   end

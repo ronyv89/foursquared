@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'foursquared/response/user'
+require 'foursquared/response/list'
+
 require 'foursquared/client'
 require 'core_ext/symbol'
 describe Foursquared::Response::User do
@@ -47,7 +49,33 @@ describe Foursquared::Response::User do
                     contact:
                       email: "blahblah@blah.com"
                       facebook: "435463435"
-                }
+          lists:
+            count: 5
+            groups:
+            - type: "created"
+              count: 3
+              items:
+              - id: "25052241/todos"
+                name: "My to-do list"
+                description: ""
+                user:
+                  id: "25052241"
+                  firstName: "Rony"
+                  lastName: "Varghese"
+                  relationship: "self"
+                  photo:
+                      prefix: "https://irs1.4sqi.net/img/user/"
+                      suffix: "/HE1OX3T3S3HN5OI4.jpg"
+                editable: false
+                public: false
+                collaborative: false
+                url: "https://foursquare.com/user/25052241/list/todos"
+                canonicalUrl: "https://foursquare.com/user/25052241/list/todos"
+                followers:
+                    count: 0
+                listItems:
+                    count: 0
+      }
     )
   end
   subject { foursquared_test_client.user("self") }
@@ -75,7 +103,7 @@ describe Foursquared::Response::User do
   describe "#friends" do
     it "should return the user's friends" do
       subject.friends.should each { |friend|
-          friend["items"].should be_empty_or_array_of_user
+          friend["items"].should be_empty_or_array_of_users
       }
     end
 
@@ -83,5 +111,14 @@ describe Foursquared::Response::User do
       subject.friends.collect{|friend| friend["type"]}.should be_unique
     end
   end
+
+  describe "#lists" do
+    it "should return the user's lists" do
+      subject.lists.should each { |list|
+          list["items"].should be_empty_or_array_of_lists
+      }
+    end
+  end
+
 
 end

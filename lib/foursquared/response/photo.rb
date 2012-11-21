@@ -18,7 +18,7 @@ module Foursquared
       end
 
       def user
-        Foursquared::Response::User.new(response["user"]) if response["user"]
+        Foursquared::Response::User.new(client, response["user"]) if response["user"]
       end
 
       def urls

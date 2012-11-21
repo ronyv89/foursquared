@@ -5,5 +5,10 @@ module Foursquared
       @list = Foursquared::Response::List.new(self, response["list"])
     end
 
+    def add_list(name, options={})
+      response = post("/lists/add", options)["response"]
+      @list = Foursquared::Response::List.new(self, response["list"])
+    end
+
   end
 end

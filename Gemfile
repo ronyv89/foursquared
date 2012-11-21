@@ -23,7 +23,7 @@ group :linux do
 end
 
 gem "oauth2"
-gem "httparty"
+gem "httmultiparty"
 # Put your project specific gems outside development group
 #
 # gem "activerecord"

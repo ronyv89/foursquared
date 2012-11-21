@@ -3,7 +3,7 @@ require "simplecov-rcov"
 require 'foursquared'
 require 'webmock/rspec'
 require 'rspec_multi_matchers'
-
+require 'foursquared'
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start do
   add_filter "vendor"
@@ -21,8 +21,7 @@ class Array
 
   def method_missing name
     if name.to_s =~ /^empty_or_array_of_(.+)s\?$/
-      p uniq
-      empty? or (uniq.count == 1 and uniq[0].is_a?(Foursquared::Response.const_get($1.capitalize)))
+      empty? or collect{|item| item.is_a?(Foursquared::Response.const_get($1.capitalize))}.all?
     end
   end
 end

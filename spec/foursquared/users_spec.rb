@@ -1,6 +1,8 @@
-require 'foursquared/users'
-require 'foursquared/photos'
-require 'foursquared/client'
+# require 'foursquared/users'
+# require 'foursquared/lists'
+# require 'foursquared/venues'
+# require 'foursquared/photos'
+# require 'foursquared/client'
 require 'spec_helper'
 describe Foursquared::Users do
   let(:me) do

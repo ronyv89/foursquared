@@ -19,6 +19,9 @@ GEM
     guard-rspec (2.1.1)
       guard (>= 1.1)
       rspec (~> 2.11)
+    httmultiparty (0.3.8)
+      httparty (>= 0.7.3)
+      multipart-post
     httparty (0.9.0)
       multi_json (~> 1.0)
       multi_xml
@@ -78,7 +81,7 @@ DEPENDENCIES
   ci_reporter
   guard
   guard-rspec
-  httparty
+  httmultiparty
   libnotify
   metric_abc
   oauth2

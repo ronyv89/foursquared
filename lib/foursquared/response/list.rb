@@ -35,6 +35,23 @@ module Foursquared
         Foursquared::Response::Photo.new(client, response["photo"])
       end
 
+      def suggest_photo item_id
+        response = client.get("/lists/#{id}/suggestphoto", {:itemId => item_id})["response"]
+        @photos = response["photos"]
+        @photos.each_key do |key|
+          key["items"] = key["items"].collect{|photo| Foursquared::Response::Photo.new(client, photo)}
+        end
+        @photos
+      end
+
+      def suggest_venues
+        response = client.get("/lists/#{id}/suggestvenues")["response"]
+        @suggested_venues = response["suggestedVenues"]
+        @suggested_venues.each do |item|
+          item["venue"] = Foursquared::Response::Venue.new(client, item["venue"])
+        end
+      end
+
       def followers
         @followers = []
         if response["followers"] and response["followers"]["items"]

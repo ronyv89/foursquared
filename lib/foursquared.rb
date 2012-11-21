@@ -1,4 +1,4 @@
-require 'httparty'
+require 'httmultiparty'
 require 'json'
 directory = File.expand_path(File.dirname(__FILE__))
 require 'core_ext/symbol'
@@ -19,8 +19,9 @@ module Foursquared
   # require 'foursquare2/campaigns'
   require 'foursquared/users'
   require 'foursquared/photos'
-  require 'foursquared/tips'
   require 'foursquared/lists'
+  require 'foursquared/tips'
+  require 'foursquared/checkins'
   require 'foursquared/venues'
   require 'foursquared/oauth/client'
   require 'foursquared/client'
@@ -28,6 +29,7 @@ module Foursquared
   require 'foursquared/response/photo'
   require 'foursquared/response/tip'
   require 'foursquared/response/venue'
+  require 'foursquared/response/checkin'
   require 'foursquared/error'
 
   # require 'foursquare2/specials'

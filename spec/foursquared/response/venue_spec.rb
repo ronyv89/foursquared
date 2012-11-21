@@ -75,8 +75,8 @@ describe Foursquared::Response::Venue do
   end
 
   it "should return the likes for the venue" do
-    subject.likes.should each { |like|
-        like["items"].should be_empty_or_array_of_users
+    subject.likes["groups"].should each { |group|
+        group["items"].should be_empty_or_array_of_users
     }
 
   end

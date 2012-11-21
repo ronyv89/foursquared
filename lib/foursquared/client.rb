@@ -1,14 +1,15 @@
-require 'httparty'
+require 'httmultiparty'
 
 module Foursquared
 
   class Client
     attr_accessor :access_token
-    include HTTParty
+    include HTTMultiParty
     include Users
     include Photos
     include Lists
     include Venues
+    include Checkins
     base_uri 'https://api.foursquare.com/v2'
     format :json
 
@@ -28,9 +29,10 @@ module Foursquared
       end
     end
 
+
     def post url, options={}
       options.merge!({:v => Time.now.strftime("%Y%m%d")}) unless options[:v]
-      self.class.post(url, options).parsed_response
+      self.class.post(url, {:body => options}).parsed_response
     end
 
 

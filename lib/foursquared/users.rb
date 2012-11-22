@@ -1,8 +1,9 @@
 module Foursquared
   module Users
-    # Get
-    def user(user_id=nil)
-      response = get("/users/#{user_id ||'self'}")["response"]
+
+    # Return the user with given user id
+    def user(user_id="self")
+      response = get("/users/#{user_id}")["response"]
       @user = Foursquared::Response::User.new(self,response["user"])
     end
 
@@ -43,6 +44,23 @@ module Foursquared
     def update(image_file_name)
       response = post("/users/self/update", options={:photo => File.read(image_file_name)})["response"]["user"]
       @user = response.collect{|user| Foursquared::Response::User.new(self,user)}
+    end
+
+    def user_checkins(user_id="self",options={})
+      response = get("/users/#{user_id}/checkins",options)["response"]
+      response["checkins"]["items"].map!{|checkin| Foursquared::Response::Checkin.new(self, checkin)} if response["checkins"] and response["checkins"]["items"]
+      response
+    end
+
+
+    def user_friends(user_id="self",options={})
+      response = get("/users/#{user_id}/friends")["response"]
+      response["friends"]["items"].map!{|friend| Foursquared::Response::User.new(self, friend)} if response["friends"] and response["friends"]["items"]
+      response
+    end
+
+    def user_lists(user_id="self", options={})
+      response
     end
   end
 end

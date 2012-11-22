@@ -52,6 +52,10 @@ module Foursquared
         end
       end
 
+      def add_item options={}
+        response = client.get("/")
+      end
+
       def followers
         @followers = []
         if response["followers"] and response["followers"]["items"]

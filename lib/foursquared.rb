@@ -23,6 +23,7 @@ module Foursquared
   require 'foursquared/tips'
   require 'foursquared/checkins'
   require 'foursquared/venues'
+  require 'foursquared/badges'
   require 'foursquared/oauth/client'
   require 'foursquared/client'
   require 'foursquared/response/user'
@@ -30,6 +31,8 @@ module Foursquared
   require 'foursquared/response/tip'
   require 'foursquared/response/venue'
   require 'foursquared/response/checkin'
+  require 'foursquared/response/badge'
+  require 'foursquared/response/badge_group'
   require 'foursquared/error'
 
   # require 'foursquare2/specials'

@@ -30,7 +30,7 @@ describe Foursquared::Response::Badge do
   subject {foursquared_test_client.badge("4f7a7d3ae4b02f1b2c869efb")}
 
   before :each do
-    stub_request(:get, "https://api.foursquare.com/v2/badges/4f7a7d3ae4b02f1b2c869efb?oauth_token=TestToken&v=20121122").to_return(:status => 200, :body => badge.to_json, :headers => {})
+    stub_request(:get, "https://api.foursquare.com/v2/badges/4f7a7d3ae4b02f1b2c869efb?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => badge.to_json, :headers => {})
   end
 
   it "should return the badge's id" do

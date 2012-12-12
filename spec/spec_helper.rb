@@ -3,7 +3,7 @@ require "simplecov-rcov"
 require 'foursquared'
 require 'webmock/rspec'
 require 'rspec_multi_matchers'
-require 'foursquared'
+
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start do
   add_filter "vendor"

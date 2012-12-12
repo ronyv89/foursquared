@@ -22,6 +22,12 @@ group :linux do
   gem "libnotify"
 end
 
+group :windows do
+  gem "wdm", "~> 0.0.3"
+  gem "win32console"
+  gem "rb-notifu"
+end
+
 gem "oauth2"
 gem "httmultiparty"
 # Put your project specific gems outside development group

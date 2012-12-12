@@ -7,7 +7,7 @@ module Foursquared
 
     def add_checkin(options={})
       response = post("/checkins/add", options)["response"]
-      {"checkin" => Foursquared::Response::Checkin.new(self, response["checkin"]), "notifications" => Foursquared::Response::Notifications.new(self, response["notifications"])}
+      {:checkin => Foursquared::Response::Checkin.new(self, response["checkin"]), :notifications => Foursquared::Response::Notifications.new(self, response["notifications"])}
     end
 
     def recent_checkins(options={})

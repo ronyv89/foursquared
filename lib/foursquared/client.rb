@@ -11,7 +11,8 @@ module Foursquared
     include Venues
     include Checkins
     include Badges
-    base_uri 'https://api.foursquare.com/v2'
+    include Events
+    base_uri 'https://api.foursquare.com/v2/'
     format :json
 
     def initialize access_token

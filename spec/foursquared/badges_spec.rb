@@ -58,8 +58,8 @@ describe Foursquared::Badges do
   subject { foursquared_test_client }
 
   before(:each) do
-    stub_request(:get, "https://api.foursquare.com/v2/users/self/badges?oauth_token=TestToken&v=20121122").to_return(:status => 200, :body => user_badges.to_json, :headers => {})
-    stub_request(:get, "https://api.foursquare.com/v2/badges/4f7a7d3ae4b02f1b2c869efb?oauth_token=TestToken&v=20121122").
+    stub_request(:get, "https://api.foursquare.com/v2/users/self/badges?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => user_badges.to_json, :headers => {})
+    stub_request(:get, "https://api.foursquare.com/v2/badges/4f7a7d3ae4b02f1b2c869efb?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => badge.to_json, :headers => {})
     @user_badges = subject.user_badges("self")
   end

@@ -14,7 +14,7 @@ module Foursquared
       end
 
       def time_zone_offset
-        response["timeZoneOffse"]
+        response["timeZoneOffset"]
       end
 
       def venue
@@ -22,6 +22,7 @@ module Foursquared
       end
 
       def photos
+        response["photos"]["items"].collect{|photo| Foursquared::Response::Photo.new(client, photo)}
       end
 
       def likes

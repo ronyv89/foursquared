@@ -22,10 +22,11 @@ module Foursquared
 
     [:approve, :deny, :request, :unfriend].each do |method_name|
       define_method method_name do |user_id|
-        response = post("/users/#{user_id}/unfriend")["response"]["user"]
+        response = post("/users/#{user_id}/#{method_name}")["response"]["user"]
         @user = response.collect{|user| Foursquared::Response::User.new(self,user)}
       end
     end
+
     def requests(options={})
       response = get("/users/requests", options)["response"]["requests"]
       @requests = response.collect{|request| Foursquared::Response::User.new(self,request)}

@@ -93,6 +93,8 @@ describe Foursquared::Response::Checkin do
   end
 
   it "should return the photos for the checkin" do
-    subject.photos.should be_empty_or_array_of_photos
+    subject.photos.should each { |item|
+      item.should be_a Foursquared::Response::Photo
+    }
   end
 end

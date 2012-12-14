@@ -125,12 +125,57 @@ describe Foursquared::Users do
     )
   end
 
+  let(:user_lists) do
+    YAML.load(%{
+        meta:
+          code: 200
+        response:
+          lists:
+            groups:
+            - type: "created"
+              name: "Created Lists"
+              items:
+              - id: "25052241/todos"
+                name: "My to-do list"
+                description: ""
+                user:
+                  id: "25052241"
+                  firstName: "Rony"
+                  lastName: "Varghese"
+                  editable: false
+                  public: false
+                  collaborative: false
+                  url: "https://foursquare.com/user/25052241/list/todos"
+                  canonicalUrl: "https://foursquare.com/user/25052241/list/todos"
+                  createdAt: 1353108348
+                  updatedAt: 1353108400
+      }
+    )
+  end
+
+  let(:user_mayorships) do
+    YAML.load(%{
+        meta:
+          code: 200
+        response:
+          mayorships:
+            items:
+            - venue:
+                id: "4f98bdbbe4b0a6559cc9f5e9"
+                name: "Manorama bus stop"
+
+      }
+    )
+  end
+
   before :each do
     stub_request(:get, "https://api.foursquare.com/v2/users/self?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => me.to_json, :headers => {})
     stub_request(:get, "https://api.foursquare.com/v2/users/leaderboard?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => leaderboard.to_json, :headers => {})
     stub_request(:get, "https://api.foursquare.com/v2/users/requests?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => requests.to_json, :headers => {})
-    stub_request(:get, "https://api.foursquare.com/v2/users/self/checkins?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
-         to_return(:status => 200, :body => user_checkins.to_json, :headers => {})
+    stub_request(:get, "https://api.foursquare.com/v2/users/self/checkins?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => user_checkins.to_json, :headers => {})
+    stub_request(:get, "https://api.foursquare.com/v2/users/self/lists?oauth_token=TestToken&v=20121214").to_return(:status => 200, :body => user_lists.to_json, :headers => {})
+    stub_request(:get, "https://api.foursquare.com/v2/users/self/mayorships?oauth_token=TestToken&v=20121214").to_return(:status => 200, :body => user_mayorships.to_json, :headers => {})
+
   end
 
   describe "#user" do
@@ -160,6 +205,10 @@ describe Foursquared::Users do
     end
   end
 
+  it "should have user requests related methods" do
+    foursquared_test_client.methods.should include(:user_approve, :user_deny, :user_request, :user_unfriend)
+  end
+
   describe "#requests" do
     it "should return user's pending friend requests" do
       foursquared_test_client.requests.should each { |item|
@@ -172,6 +221,24 @@ describe Foursquared::Users do
     it "should return given user's checkins" do
       foursquared_test_client.user_checkins["checkins"]["items"].should each { |item|
         item.should be_a(Foursquared::Response::Checkin)
+      }
+    end
+  end
+
+  describe "#user_lists" do
+    it "should return a user's lists" do
+      foursquared_test_client.user_lists["groups"].should each { |group|
+        group["items"].should each { |item|
+          item.should be_a(Foursquared::Response::List)
+        }
+      }
+    end
+  end
+
+  describe "#user_mayorships" do
+    it "should retun a user's mayorships" do
+      foursquared_test_client.user_mayorships["items"].should each {|item|
+        item["venue"].should be_a(Foursquared::Response::Venue)
       }
     end
   end

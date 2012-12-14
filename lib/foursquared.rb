@@ -25,6 +25,7 @@ module Foursquared
   require 'foursquared/venues'
   require 'foursquared/badges'
   require 'foursquared/events'
+  require 'foursquared/pages'
   require 'foursquared/oauth/client'
   require 'foursquared/client'
   require 'foursquared/response/user'

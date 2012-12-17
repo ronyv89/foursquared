@@ -15,9 +15,10 @@ module Foursquared
       @venues = response["venues"]["items"].collect{|item| Foursquared::Response::Venue.new(self, item)}
     end
 
-    def page_like page_id, options={}
-      response = get("/pages/#{page_id}/like",options)["response"]
+    def like_page page_id, options={}
+      response = post("/pages/#{page_id}/like",options)["response"]
       @page = Foursquared::Response::User.new(self, response["user"])
     end
+
   end
 end

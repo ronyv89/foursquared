@@ -25,6 +25,7 @@ module Foursquared
   require 'foursquared/badges'
   require 'foursquared/events'
   require 'foursquared/pages'
+  require 'foursquared/specials'
   require 'foursquared/oauth/client'
   require 'foursquared/client'
   require 'foursquared/response/user'
@@ -36,20 +37,8 @@ module Foursquared
   require 'foursquared/response/badge_group'
   require 'foursquared/response/event'
   require 'foursquared/response/event_category'
+  require 'foursquared/response/special'
   require 'foursquared/error'
-
-  # require 'foursquare2/specials'
-  # require 'foursquare2/settings'
-  # require 'foursquare2/photos'
-  # require 'foursquare2/tips'
-  # require 'foursquare2/checkins'
-  # require 'foursquare2/venues'
-  # require 'foursquare2/pages'
-  # require 'foursquare2/lists'
-  # require 'foursquare2/events'
-  # require 'foursquare2/client'
-  # require 'foursquare2/api_error'
-
 
 end
 

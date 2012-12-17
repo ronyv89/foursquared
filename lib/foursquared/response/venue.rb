@@ -8,7 +8,7 @@ module Foursquared
         @response = response
       end
 
-      [:id, :name, :contact, :location, :verified, :stats, :url, :like, :dislike, :description, :rating, :phrases, :reasons].each do |method_name|
+      [:id, :name, :contact, :location, :verified, :stats, :url, :price, :like, :dislike, :description, :rating, :menu, :hours, :phrases, :reasons].each do |method_name|
         define_method method_name do
           response[method_name.to_s]
         end

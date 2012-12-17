@@ -8,7 +8,7 @@ module Foursquared
 
     def event_categories
       response = get("/events/categories")["response"]
-      response["categories"].collect{|category| Foursquared::Response::EventCategory.new(category)}
+      response["categories"].collect{|category| Foursquared::Response::Category.new(category)}
     end
   end
 end

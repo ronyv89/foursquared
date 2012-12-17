@@ -36,7 +36,7 @@ module Foursquared
   require 'foursquared/response/badge'
   require 'foursquared/response/badge_group'
   require 'foursquared/response/event'
-  require 'foursquared/response/event_category'
+  require 'foursquared/response/category'
   require 'foursquared/response/special'
   require 'foursquared/error'
 

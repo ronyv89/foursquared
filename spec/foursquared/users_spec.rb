@@ -173,8 +173,8 @@ describe Foursquared::Users do
     stub_request(:get, "https://api.foursquare.com/v2/users/leaderboard?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => leaderboard.to_json, :headers => {})
     stub_request(:get, "https://api.foursquare.com/v2/users/requests?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => requests.to_json, :headers => {})
     stub_request(:get, "https://api.foursquare.com/v2/users/self/checkins?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => user_checkins.to_json, :headers => {})
-    stub_request(:get, "https://api.foursquare.com/v2/users/self/lists?oauth_token=TestToken&v=20121214").to_return(:status => 200, :body => user_lists.to_json, :headers => {})
-    stub_request(:get, "https://api.foursquare.com/v2/users/self/mayorships?oauth_token=TestToken&v=20121214").to_return(:status => 200, :body => user_mayorships.to_json, :headers => {})
+    stub_request(:get, "https://api.foursquare.com/v2/users/self/lists?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => user_lists.to_json, :headers => {})
+    stub_request(:get, "https://api.foursquare.com/v2/users/self/mayorships?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => user_mayorships.to_json, :headers => {})
 
   end
 
@@ -205,10 +205,6 @@ describe Foursquared::Users do
     end
   end
 
-  it "should have user requests related methods" do
-    foursquared_test_client.methods.should include(:user_approve, :user_deny, :user_request, :user_unfriend)
-  end
-
   describe "#requests" do
     it "should return user's pending friend requests" do
       foursquared_test_client.requests.should each { |item|
@@ -219,7 +215,7 @@ describe Foursquared::Users do
 
   describe "#user_checkins" do
     it "should return given user's checkins" do
-      foursquared_test_client.user_checkins["checkins"]["items"].should each { |item|
+      foursquared_test_client.user_checkins["items"].should each { |item|
         item.should be_a(Foursquared::Response::Checkin)
       }
     end

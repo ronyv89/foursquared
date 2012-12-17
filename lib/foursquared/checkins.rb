@@ -1,6 +1,6 @@
 module Foursquared
   module Checkins
-    def checkin(checkin_id,options={})
+    def checkin checkin_id, options={}
       response = get("/checkins/#{checkin_id}",options)["response"]
       @checkin = Foursquared::Response::Checkin.new(self, response["checkin"])
     end

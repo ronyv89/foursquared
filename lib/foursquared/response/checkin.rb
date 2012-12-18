@@ -26,38 +26,46 @@ module Foursquared
       end
 
       def likes
-        likes_response = client.get("/checkins/#{id}/likes")["response"]
-        @likes = {}
-        if likes_response["likes"]
-          @likes.merge!(likes_response["likes"])
-          if @likes["groups"]
-            @likes["groups"].each do |group|
-              group["items"].map!{|item| Foursquared::Response::User.new(client, item)}
-            end
-          end
+        response = client.get("/checkins/#{id}/likes")["response"]["likes"]
+        response["groups"].each do |group|
+          group["items"].map!{|item| Foursquared::Response::User.new(client, item)}
         end
-        @likes
+        response
       end
 
       def photos
         response["photos"]["items"].collect{|item| Foursquared::Response::Photo.new(client, item)}
       end
 
-      def add_comment(options={})
+      # Add a comment to a check-in 
+      # @param [Hash] options
+      # @option options [String] :text The text of the comment, up to 200 characters.
+      # @option options [String] :mentions Mentions in your check-in.
+      def add_comment options={}
         response = post("/checkins/#{id}/addcomment", options)["response"]
         @comment = response["comment"]
-        @comment["user"] = Foursquared::Response::User.new(@comment["user"])
+        @comment["user"] = Foursquared::Response::User.new(client, @comment["user"])
         @comment
       end
 
-      def delete_comment(comment_id)
-        response = post("/checkins/#{id}/deletecomment", {:commentId => comment_id})["response"]
-        @checkin = Foursquared::Response::Checkin.new(response["checkin"])
+      # Remove commment from check-in
+      # @param [Hash] options
+      # @option options [String] :commentId The ID of the checkin to remove a comment from.
+      # @return [Foursquared::Response::Checkin] The checkin, minus this comment.
+      def delete_comment options={}
+        response = post("/checkins/#{id}/deletecomment", options)["response"]
+        @checkin = Foursquared::Response::Checkin.new(client, response["checkin"])
       end
 
-      def like_checkin(value=1)
-        response =  post("/checkins/#{id}/like", {:commentId => comment_id, :set => value})["response"]
-        likes
+      # Like or unlike a checkin
+      # @param [Hash] options
+      # @option options [Integer] :set If 1, like this checkin. If 0 unlike (un-do a previous like) it. Default value is 1.
+      def like options={}
+        response =  post("/checkins/#{id}/like", options)["response"]["likes"]
+        response["groups"].each do |group|
+          group["items"].map!{|item| Foursquared::Response::User.new(client, item)}
+        end
+        response
       end
 
     end

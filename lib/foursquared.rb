@@ -5,9 +5,8 @@ require 'core_ext/symbol'
 module Foursquared
   class << self
 
-    FIELDS = [ :client_id, :client_secret, :api_version,
-               :ssl, :access_token, :locale ]
-    attr_accessor(*FIELDS)
+    
+    attr_accessor :client_id, :client_secret, :api_version, :ssl, :access_token, :locale 
 
 
     def configure

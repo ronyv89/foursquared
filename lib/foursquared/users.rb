@@ -5,7 +5,7 @@ module Foursquared
 
     # Return profile information for a given user
     # @param [String, Integer] user_id user's id
-    # @return [Foursquared::Response::User]
+    # @return [Foursquared::Response::User] A user.
     def user user_id="self"
       response = get("/users/#{user_id}")["response"]
       @user = Foursquared::Response::User.new(self,response["user"])
@@ -108,7 +108,7 @@ module Foursquared
     # @option options [String] :sort How to sort the returned checkins. Can be "newestfirst" or "oldestfirst".
     # @option options [Integer] :afterTimestamp Retrieve the first results to follow these seconds since epoch
     # @option options [Integer] :beforeTimestamp Retrieve the first results prior to these seconds since epoch
-    # @return options [Hash] A count and items of check-ins.
+    # @return [Hash] A count and items of check-ins.
     def user_checkins user_id="self", options={}
       response = get("/users/#{user_id}/checkins",options)["response"]["checkins"]
       response["items"].map!{|checkin| Foursquared::Response::Checkin.new(self, checkin)} if response["items"]
@@ -122,7 +122,7 @@ module Foursquared
     # @option options [Integer] :offset Used to page through results.
     # @return [Hash]  A count and items of friends.
     def user_friends user_id="self", options={}
-      response = get("/users/#{user_id}/friends")["response"]["friends"]
+      response = get("/users/#{user_id}/friends"), options["response"]["friends"]
       response["items"].map!{|friend| Foursquared::Response::User.new(self, friend)} if response["items"]
       response
     end
@@ -134,7 +134,7 @@ module Foursquared
     # @option options [String] :ll Location of the user eg: 40.7,-74
     # @return [Hash]
     def user_lists user_id="self", options={}
-      response = get("/users/#{user_id}/lists")["response"]
+      response = get("/users/#{user_id}/lists", options)["response"]
       @lists = response["lists"]
       @lists["groups"].each do |group|
         group["items"].map!{|item| Foursquared::Response::List.new(self, item)}
@@ -188,7 +188,24 @@ module Foursquared
     def user_todos user_id="self", options={}
       response = get("/lists/#{user_id}/todos", options)["response"]
       Foursquared::Response::List.new(self, response["list"])
-    end
     
+    end
+    # Badges for a user
+    # @param [String, Integer] user_id
+    # @return [Hash]
+    def user_badges user_id="self"
+      response = get("/users/#{user_id}/badges")["response"]
+      if response["sets"] and response["sets"]["groups"]
+        response["sets"]["groups"].map!{|group| Foursquared::Response::BadgeGroup.new(self, group)}
+      end
+
+      if response["badges"]
+        response["badges"].each_key do |badge_id|
+          response["badges"][badge_id] = badge(badge_id)
+        end
+      end
+      response
+    end
+
   end
 end

@@ -1,4 +1,5 @@
 module Foursquared
+  # Badges module
   module Badges
     def badge(badge_id)
       response = get("/badges/#{badge_id}")["response"]

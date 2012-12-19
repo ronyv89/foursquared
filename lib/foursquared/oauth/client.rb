@@ -1,6 +1,8 @@
 require 'oauth2'
 module Foursquared
+  # OAuth module
   module OAuth
+    # OAuth Client class
     class Client     
       attr_accessor :client_id, :client_secret, :oauth_client, :callback_url, :access_token
       def initialize(client_id, client_secret, callback_url, opts={}, &block)

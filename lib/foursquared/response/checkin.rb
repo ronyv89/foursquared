@@ -1,5 +1,6 @@
 module Foursquared
   module Response
+    # Checkin response
     class Checkin
       attr_reader :client, :response
       def initialize client, response

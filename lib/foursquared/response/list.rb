@@ -1,5 +1,6 @@
 module Foursquared
   module Response
+    # List response
     class List
       attr_reader :client, :response
       def initialize client, response

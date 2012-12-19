@@ -1,5 +1,6 @@
 module Foursquared
   module Response
+    # Event response
     class Event
       attr_reader :client, :response
       def initialize client, response

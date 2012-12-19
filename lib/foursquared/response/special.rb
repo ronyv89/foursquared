@@ -1,5 +1,6 @@
 module Foursquared
   module Response
+    # Special response
     class Special
       attr_reader :client, :response
 

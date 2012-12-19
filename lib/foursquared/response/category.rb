@@ -1,5 +1,6 @@
 module Foursquared
   module Response
+    # Category object
     class Category
       attr_reader :response
       def initialize response

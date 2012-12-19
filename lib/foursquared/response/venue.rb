@@ -1,5 +1,6 @@
 module Foursquared
   module Response
+    # Venue response
     class Venue
       attr_reader :client, :response
 

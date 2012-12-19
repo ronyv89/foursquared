@@ -1,5 +1,6 @@
 module Foursquared
   module Response
+    # Badge group response
     class BadgeGroup
       attr_reader :client, :response
       def initialize client, response

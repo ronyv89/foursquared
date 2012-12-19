@@ -1,4 +1,5 @@
 module Foursquared
+  # Lists module
   module Lists
     def list(list_id)
       response = get("/lists/#{list_id}")["response"]

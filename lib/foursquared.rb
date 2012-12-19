@@ -25,6 +25,7 @@ module Foursquared
   require 'foursquared/events'
   require 'foursquared/pages'
   require 'foursquared/specials'
+  require 'foursquared/tips'
   require 'foursquared/oauth/client'
   require 'foursquared/client'
   require 'foursquared/response/user'
@@ -37,6 +38,7 @@ module Foursquared
   require 'foursquared/response/event'
   require 'foursquared/response/category'
   require 'foursquared/response/special'
+  require 'foursquared/response/tip'
   require 'foursquared/error'
 
 end

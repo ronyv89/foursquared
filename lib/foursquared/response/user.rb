@@ -40,6 +40,12 @@ module Foursquared
         Foursquared::Response::Photo.new(client, response["photo"])
       end
 
+      # User's relationship with the acting user
+      # @return [String]
+      def relationship
+        response["relationship"]
+      end
+
       # User's friends list retrieved from the initial response
       # @return [Hash] count and groups of users
       def friends
@@ -174,7 +180,7 @@ module Foursquared
       # @return [Hash]
       def mayorships
         @mayorships = response["mayorships"]
-        @mayorships["items"].each{|item| item["venue"] = Foursquared::Response::Venue.new(self, item["venue"])}
+        @mayorships["items"].each{|item| item["venue"] = Foursquared::Response::Venue.new(client, item["venue"])}
         @mayorships
       end
 
@@ -188,7 +194,7 @@ module Foursquared
       # @return [Hash] count and items of badges
       def badges
         @badges = response["badges"]
-        @badges["items"].map!{|item| Foursquared::Response::Badges(client, item)}
+        @badges["items"].map!{|item| Foursquared::Response::Badge.new(client, item)}
       end
 
       # List user's full badges
@@ -197,6 +203,44 @@ module Foursquared
         client.user_badges(id)
       end
       
+      # Approves a pending friend request from this user.
+      # @return [Foursquared::Response::User] the approved user
+      def approve_friend_request user_id
+        response = post("/users/#{id}/approve")["response"]
+        @user = Foursquared::Response::User.new(client, response["user"])
+      end
+
+      # Denies a pending friend request from this user.
+      # @return [Foursquared::Response::User] the denied user
+      def deny_friend_request
+        request_response = post("/users/#{id}/deny")["response"]
+        @user = Foursquared::Response::User.new(client, request_response["user"])
+      end
+
+      # Send a Friend/Follow Request to this user
+      # @param [String, Integer] user_id The request user's/page's id
+      # @return [Foursquared::Response::User] the pending user
+      def send_friend_request
+        request_response = post("/users/#{id}/request")["response"]
+        @user = Foursquared::Response::User.new(client, request_response["userrequest_"])
+      end
+
+      # Removes a friend, unfollows a celebrity, or cancels a pending friend request. 
+      # @return [Foursquared::Response::User] the removed user
+      def unfriend
+        request_response = post("/users/#{id}/unfriend")["response"]
+        @user = Foursquared::Response::User.new(client, request_response["user"])
+      end
+
+      # Set whether to receive pings about this user 
+      # @param [Hash] options
+      # @option options [Boolean] :value required, true or false.
+      # @return [Foursquared::Response::User] User object for the user
+      def set_pings options={}
+        request_response = post("/users/#{id}/setpings", options)["response"]
+        @user = Foursquared::Response::User.new(client,request_response["user"])
+      end
+
     end
   end
 end

@@ -1,4 +1,5 @@
 module Foursquared
+  # Pages module
   module Pages
     def page page_id
       response  = get("/pages/#{page_id}")["response"]

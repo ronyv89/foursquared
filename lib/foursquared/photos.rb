@@ -1,4 +1,5 @@
 module Foursquared
+  # photos module
   module Photos
     def photo photo_id
       response = get("/photos/#{photo_id}")["response"]

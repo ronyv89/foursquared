@@ -102,20 +102,20 @@ describe Foursquared::Response::User do
 
   describe "#friends" do
     it "should return the user's friends" do
-      subject.friends.should each { |friend|
-          friend["items"].should be_empty_or_array_of_users
+      subject.friends["groups"].should each { |group|
+          group["items"].should be_empty_or_array_of_users
       }
     end
 
     it "should have different type of friends" do
-      subject.friends.collect{|friend| friend["type"]}.should be_unique
+      subject.friends["groups"].collect{ |group| group["type"] }.should be_unique
     end
   end
 
   describe "#lists" do
     it "should return the user's lists" do
-      subject.lists.should each { |list|
-          list["items"].should be_empty_or_array_of_lists
+      subject.lists["groups"].should each { |group|
+          group["items"].should be_empty_or_array_of_lists
       }
     end
   end

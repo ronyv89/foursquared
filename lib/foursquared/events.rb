@@ -1,5 +1,6 @@
 require 'pp'
 module Foursquared
+  # Events module
   module Events
     def event(event_id)
       response = get("/events/#{event_id}")["response"]

@@ -42,7 +42,7 @@ module Foursquared
       # Whether the acting user likes the tip
       # @return [Boolean] true or false
       def like?
-        response["like"] || false
+        response["like"]
       end
 
       # If the context allows tips from multiple venues, the compact venue for this tip. 
@@ -97,7 +97,38 @@ module Foursquared
         @done["groups"].each {|group| group["items"].map!{|item| Foursquared::Response::User.new(client, item)}} if @done and @done["groups"]
       end
 
+      # Like or unlike the tip 
+      # @param [Hash] options
+      # @option options [Integer] :set If 1, like this tip. If 0 unlike (un-do a previous like) it. Default value is 1
+      # @return [Hash] Updated count and groups of users who like this tip.
+      def like options={}
+        response = post("/tips/#{id}/like", options)["response"]
+        @likes = response["likes"]
+        @likes["groups"].each{ |group| group["items"].map!{|item| Foursquared::Response::User.new(client, item)}} if @likes and @likes["groups"]
+        @likes
+      end
 
+      # Mark the tip done 
+      # @return [Foursquared::Response::Tip] The marked to-do.
+      def mark_done 
+        response = post("/tips/#{id}/markdone")["response"]
+        Foursquared::Response::Tip.new(self, response["tip"])
+      end
+
+      # Mark the tip to-do
+      # @return [Foursquared::Response::Todo] The marked to-do.
+      def mark_todo
+        response = post("/tips/#{id}/marktodo")["response"]
+        Foursquared::Response::Todo.new(self, response["todo"])
+      end
+
+      # Unmark the tip as to-do 
+      # @return [Foursquared::Response::Tip] The current tip
+      def unmark_todo tip_id
+        response = post("/tips/#{tip_id}/unmark")["response"]
+        Foursquared::Response::Tip.new(self, response["tip"])
+      end
+      
     end
   end
 end

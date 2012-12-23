@@ -82,6 +82,7 @@ module Foursquared
       response = post("/tips/#{tip_id}/like", options)["response"]
       @likes = response["likes"]
       @likes["groups"].each{ |group| group["items"].map!{|item| Foursquared::Response::User.new(client, item)}} if @likes and @likes["groups"]
+      @likes
     end
 
     # Mark a tip done 
@@ -102,7 +103,7 @@ module Foursquared
 
     # Unmark a tip as to-do 
     # @param [String] tip_id required, ID of tip.
-    # @return [Foursquared::Response::Tip] The marked to-do.
+    # @return [Foursquared::Response::Tip] The current tip
     def unmark_tip_todo tip_id
       response = post("/tips/#{tip_id}/unmark")["response"]
       Foursquared::Response::Tip.new(self, response["tip"])

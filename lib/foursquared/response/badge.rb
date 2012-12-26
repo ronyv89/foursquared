@@ -68,6 +68,7 @@ module Foursquared
           end
         end
       end
+      
     end
   end
 end

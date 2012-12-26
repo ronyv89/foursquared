@@ -188,7 +188,6 @@ module Foursquared
     def user_todos user_id="self", options={}
       response = get("/lists/#{user_id}/todos", options)["response"]
       Foursquared::Response::List.new(self, response["list"])
-    
     end
     # Badges for a user
     # @param [String, Integer] user_id

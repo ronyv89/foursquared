@@ -8,6 +8,53 @@ module Foursquared
         @response = response
       end
 
+      # Id of the list
+      # @return [String]
+      def id
+        response["id"]
+      end
+
+      def name
+        response["name"]
+      end
+
+      def description
+        response["description"]
+      end
+
+      def type
+        response["type"]
+      end
+
+      def editable?
+        response["editable"]
+      end
+
+      def public?
+        response["public"]
+      end
+
+      def collaborative?
+        response["collaborative"]
+      end
+
+      def url
+        response["url"]
+      end
+
+      def following
+      end
+
+      def canonical_url
+      end
+
+      def visited_count
+      end
+
+      def venue_count
+      end
+
+
       [:id, :name, :description, :type, :editable, :public, :collaborative, :url, :following].each do |method_name|
         define_method method_name do
           response[method_name.to_s]

@@ -1,6 +1,8 @@
 module Foursquared
   # Pages module
   module Pages
+    # Return the page with the given ID
+    # @return [FOursquared::Response::User]
     def page page_id
       response  = get("/pages/#{page_id}")["response"]
       @page = Foursquared::Response::User.new(self, response["user"])

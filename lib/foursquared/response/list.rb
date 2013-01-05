@@ -124,7 +124,9 @@ module Foursquared
           @photos.each_key do |key|
             key["items"].map!{|item| Foursquared::Response::Photo.new(client, item)}
           end
-
+        end
+        @photos
+      end
       # Suggests venues that may be appropriate for this list.
       # @return [Array] Compact venues that may be appropriate for this list.
       def suggest_venues
@@ -166,8 +168,12 @@ module Foursquared
       # List Followers
       # @return [Hash] A count and items of users following this list.
       def followers
-        @followers = client.get("/lists/#{id}/followers")["response"]
+        @followers = client.get("/lists/#{id}/followers")["response"]["followers"]
         if @followers and @followers["items"]
+          @followers["items"].map!{|item| Foursquared::Response::User.new(client, item)}
+        end
+        @followers
+      end
 
       # Delete an item from the list
       # @param [Hash] options
@@ -187,7 +193,7 @@ module Foursquared
         @collaborators = response["collaborators"]
         @collaborators["items"].map!{|item| Foursquared::Response::User.new(client, item)}
         @collaborators
-
+      end
     end
   end
 end

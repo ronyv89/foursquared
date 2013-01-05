@@ -14,8 +14,33 @@ module Foursquared
         end
       end
 
+      # The ID of the photo
+      # @return [String]
+      def id
+        response["id"]
+      end
+
+      # The time at which the photo was created
+      # @return [Time]
       def created_at
-        response["createdAt"]
+        Time.at(response["createdAt"]) if response["createdAt"]
+      end
+
+      # The name and url for the application that created this photo.
+      def source
+        response["source"]
+      end
+
+      # Start of the URL for this photo.
+      # @return [String]
+      def prefix
+        response["prefix"]
+      end
+
+      # End of the URL for this photo.
+      # @return [String]
+      def suffix
+        response["suffix"]
       end
 
       def user

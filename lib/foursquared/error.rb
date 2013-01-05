@@ -8,8 +8,9 @@ module Foursquared
       @type = meta["errorType"]
     end
 
+    # Error message to be displayed on encountering Foursquare::Error
     def message
-      "Error: #{code}, #{type}, #{detail}"
+      "#{type}: #{detail} (#{code})"
     end
   end
 end

@@ -4,7 +4,7 @@ module Foursquared
     class Badge
       attr_reader :client, :response
       def initialize client, response
-        @client  = client
+        @client = client
         @response = response
       end
 
@@ -24,6 +24,18 @@ module Foursquared
       # @return [String]
       def name
         response["name"]
+      end
+
+      # The currently unlocked level
+      # @return [Integer]
+      def level
+        response["level"]
+      end
+
+      # Text about the level unlocked
+      # @return [String]
+      def level_text
+        response["responseText"]
       end
 
       # The message to be shown when user unlocks the badge
@@ -63,12 +75,13 @@ module Foursquared
         if @unlocks
           @unlocks.each do |unlock|
             if unlock["checkins"]
-              unlock["checkins"] = unlock["checkins"].collect{|checkin| Foursquared::Response::Checkin.new(client, checkin)}
+              unlock["checkins"].map!{|checkin| Foursquared::Response::Checkin.new(client, checkin)}
             end
           end
         end
+        @unlocks
       end
-      
+
     end
   end
 end

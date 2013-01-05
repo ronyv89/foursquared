@@ -7,8 +7,8 @@ module Foursquared
     # @param [String, Integer] user_id user's id
     # @return [Foursquared::Response::User] A user.
     def user user_id="self"
-      response = get("/users/#{user_id}")["response"]
-      @user = Foursquared::Response::User.new(self,response["user"])
+      @user = get("/users/#{user_id}")["response"]["user"]
+      Foursquared::Response::User.new(self,@user)
     end
 
     # Returns the user's leaderboard.
@@ -16,14 +16,9 @@ module Foursquared
     # @option options [Integer] :neighbors Number of friends' scores to return that are adjacent to your score, in ranked order.
     # @return [Hash] the user's leaderboard.
     def leaderboard options={}
-      response = get("/users/leaderboard", options)["response"]["leaderboard"]
-      @leaderboard = {"count" => response["count"], "items" => []}
-      response["items"].each do |item|
-        leaderboard_item = {}
-        leaderboard_item["user"] = Foursquared::Response::User.new(self,user)
-        leaderboard_item["scores"] = item["scores"]
-        leaderboard_item["rank"] = item["rank"]
-        @leaderboard["items"] << leaderboard_item
+      @leaderboard = get("/users/leaderboard", options)["response"]["leaderboard"]
+      @leaderboard["items"].each do |item|
+        item["user"] = Foursquared::Response::User.new(self,item["user"])
       end
       @leaderboard
     end
@@ -52,7 +47,7 @@ module Foursquared
       @user = Foursquared::Response::User.new(self,response["user"])
     end
 
-    # Removes a friend, unfollows a celebrity, or cancels a pending friend request. 
+    # Removes a friend, unfollows a celebrity, or cancels a pending friend request.
     # @param [String, Integer] user_id The request user's id
     # @return [Foursquared::Response::User] the removed user
     def unfriend user_id
@@ -82,7 +77,7 @@ module Foursquared
       response
     end
 
-    # Set whether to receive pings about a user 
+    # Set whether to receive pings about a user
     # @param [String, Integer] user_id User ID of a friend
     # @param [Hash] options
     # @option options [Boolean] :value True or false.
@@ -100,7 +95,7 @@ module Foursquared
       @user = Foursquared::Response::User.new(self, response["user"])
     end
 
-    # Checkins by a user 
+    # Checkins by a user
     # @param [String, Integer] user_id
     # @param [Hash] options
     # @option options [Integer] :limit Number of results to return, up to 250.
@@ -142,7 +137,7 @@ module Foursquared
       @lists
     end
 
-    # List user's mayorships 
+    # List user's mayorships
     # @param [String, Integer] user_id
     # @return [Hash]
     def user_mayorships user_id="self"
@@ -152,7 +147,7 @@ module Foursquared
       @mayorships
     end
 
-    # Photos from a User 
+    # Photos from a User
     # @param [String, Integer] user_id
     # @param [Hash] options
     # @option options [Integer] :limit Number of results to return, up to 500.
@@ -189,6 +184,7 @@ module Foursquared
       response = get("/lists/#{user_id}/todos", options)["response"]
       Foursquared::Response::List.new(self, response["list"])
     end
+
     # Badges for a user
     # @param [String, Integer] user_id
     # @return [Hash]

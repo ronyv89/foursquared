@@ -12,7 +12,7 @@ module Foursquared
     # @return [Array] An array of event categories
     def event_categories
       response = get("/events/categories")["response"]
-      response["categories"].collect{|category| Foursquared::Response::Category.new(category)}
+      response["categories"].collect{|category| Foursquared::Response::Category.new(self, category)}
     end
   end
 end

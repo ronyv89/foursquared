@@ -8,10 +8,34 @@ module Foursquared
         @response = response
       end
 
-      [:type, :name, :image, :items].each do |method_name|
-        define_method method_name do
-          response["badge"][method_name.to_s] if response["badge"]
-        end
+      # The type of badge group
+      # @return [String]
+      def type
+        response["type"]
+      end
+
+      # Name of the badge group
+      # @return [String]
+      def name
+        response["name"]
+      end
+
+      # Image for the badge group
+      # @return [Hash]
+      def image
+        response["image"]
+      end
+
+      # Array of IDs of badges present in the group
+      # @return [Array<String>]
+      def items
+        response["items"]
+      end
+
+      # Sub groups of the group
+      # @return [Array<Foursquared::Response::BadgeGroup>]
+      def groups
+        response["groups"].map!{|group| Foursquared::Response::BadgeGroup.new(client, group)}
       end
     end
   end

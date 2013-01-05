@@ -30,7 +30,7 @@ module Foursquared
       if response["meta"]["code"] == 200
         return response
       else
-        raise Foursquared::Error.new("meta")
+        raise Foursquared::Error.new(response["meta"])
       end
     end
 
@@ -39,7 +39,12 @@ module Foursquared
     # @param [Hash] options Additonal options to be passed
     def post url, options={}
       options.merge!({:v => Time.now.strftime("%Y%m%d")}) unless options[:v]
-      self.class.post(url, {:body => options}).parsed_response
+      response = self.class.post(url, {:body => options}).parsed_response
+      if response["meta"]["code"] == 200
+        return response
+      else
+        raise Foursquared::Error.new(response["meta"])
+      end
     end
 
   end

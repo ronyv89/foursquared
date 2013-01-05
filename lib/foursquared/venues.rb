@@ -33,7 +33,7 @@ module Foursquared
     end
 
     # Returns a hierarchical list of categories applied to venues.
-    # @return [Array]
+    # @return [Array<Foursquared::Response::Category>]
     def venue_categories
       response = get("/venues/categories")["response"]
       response["categories"].collect{|category| Foursquared::Response::Category.new(self, category) }
@@ -67,7 +67,7 @@ module Foursquared
     end
 
     # Get a list of venues the current user manages.
-    # @return [Array] An array of compact venues the user manages.
+    # @return [Array<Foursquared::Response::Venue>] An array of compact venues the user manages.
     def managed_venues
       response = get("/venues/managed")["response"]
       @venues = response["venues"].collect{|venue| Foursquared::Response::Venue.new(self, venue)}

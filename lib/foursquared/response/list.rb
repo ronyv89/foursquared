@@ -82,8 +82,6 @@ module Foursquared
 
       # The time at which the list was created
       # @return [Time]
-
-
       def created_at
         Time.at(response["createdAt"]) if response["createdAt"]
       end

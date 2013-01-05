@@ -82,6 +82,8 @@ module Foursquared
 
       # The time at which the list was created
       # @return [Time]
+
+
       def created_at
         Time.at(response["createdAt"]) if response["createdAt"]
       end
@@ -124,9 +126,6 @@ module Foursquared
           @photos.each_key do |key|
             key["items"].map!{|item| Foursquared::Response::Photo.new(client, item)}
           end
-        end
-        @photos
-      end
 
       # Suggests venues that may be appropriate for this list.
       # @return [Array] Compact venues that may be appropriate for this list.
@@ -171,12 +170,6 @@ module Foursquared
       def followers
         @followers = client.get("/lists/#{id}/followers")["response"]
         if @followers and @followers["items"]
-          response["followers"]["items"].each do |follower|
-          @followers << Foursquared::Response::User.new(client, follower)
-          end
-        end
-        @followers
-      end
 
       # Delete an item from the list
       # @param [Hash] options
@@ -196,7 +189,7 @@ module Foursquared
         @collaborators = response["collaborators"]
         @collaborators["items"].map!{|item| Foursquared::Response::User.new(client, item)}
         @collaborators
-      end
+
     end
   end
 end

@@ -20,10 +20,14 @@ module Foursquared
         @oauth_client = OAuth2::Client.new(client_id, client_secret, @options)
       end
 
+      # Step 1: URL for OAuth2 oauthorizetion of Foursquare
+      # @return [String]
       def authorize_url
         oauth_client.auth_code.authorize_url(:redirect_uri => callback_url)
       end
 
+      # Step 2: Get access token after authorizing user
+      # @param [String] code The value extracted from the callback url param 'code'
       def get_access_token code
         token = oauth_client.auth_code.get_token(code, :redirect_uri => callback_url)
         @access_token = token.token

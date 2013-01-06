@@ -20,18 +20,26 @@ module Foursquared
         end
       end
 
+      # The time at which the event starts
+      # @return [Time]
       def start_at
         Time.at response["startAt"] if response["startAt"]
       end
 
+      # The time at which the event ends
+      # @return [Time]
       def end_at
         Time.at response["endAt"] if response["endAt"]
       end
 
+      # The date at which the event is happening
+      # @return [Time]
       def date
         Time.at response["date"] if response["date"]
       end
 
+      # Users who are present at the event now
+      # @return [Hash]
       def here_now
         @here_now = response["hereNow"]
         @here_now["groups"].each do |group| 

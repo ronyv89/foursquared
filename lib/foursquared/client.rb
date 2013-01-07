@@ -16,9 +16,16 @@ module Foursquared
     base_uri 'https://api.foursquare.com/v2/'
     format :json
 
-    def initialize access_token
-      @access_token = access_token
-      self.class.default_params :oauth_token => access_token
+    def initialize credentials={}
+      
+      if credentials[:access_token]
+        self.class.default_params :oauth_token => credentials[:access_token]
+      elsif credentials[:client_id] and credentials[:client_secret]
+        self.class.default_params :client_id => credentials[:client_id]
+        self.class.default_params :client_id => credentials[:client_id]
+      else
+        raise "Must provide access_token or client_id and client_secret"
+      end
     end
 
     # Do a 'get' request

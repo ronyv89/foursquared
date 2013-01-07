@@ -1,7 +1,7 @@
 module Foursquared
   # Error class
   class Error < StandardError
-    attr_reader :code, :error_type, :error_detail
+    attr_reader :code, :type, :detail
     def initialize meta
       @code = meta["code"]
       @detail = meta["errorDetail"]
@@ -10,7 +10,8 @@ module Foursquared
 
     # Error message to be displayed on encountering Foursquare::Error
     def message
-      "#{error_type}: #{error_detail} (#{code})"
+      "#{type}: #{detail} (#{code})"
     end
+    alias :to_s :message
   end
 end

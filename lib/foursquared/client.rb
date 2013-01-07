@@ -22,7 +22,7 @@ module Foursquared
         self.class.default_params :oauth_token => credentials[:access_token]
       elsif credentials[:client_id] and credentials[:client_secret]
         self.class.default_params :client_id => credentials[:client_id]
-        self.class.default_params :client_id => credentials[:client_id]
+        self.class.default_params :client_secret => credentials[:client_secret]
       else
         raise "Must provide access_token or client_id and client_secret"
       end

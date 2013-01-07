@@ -10,7 +10,7 @@ module Foursquared
 
     # Error message to be displayed on encountering Foursquare::Error
     def message
-      "#{type}: #{detail} (#{code})"
+      "#{error_type}: #{error_detail} (#{code})"
     end
   end
 end

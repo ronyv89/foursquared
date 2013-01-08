@@ -15,14 +15,17 @@ module Foursquared
     include Pages
     base_uri 'https://api.foursquare.com/v2/'
     format :json
-
+    
+    attr_accessor :client_id, :client_secret, :access_token
     def initialize credentials={}
-      
-      if credentials[:access_token]
-        self.class.default_params :oauth_token => credentials[:access_token]
-      elsif credentials[:client_id] and credentials[:client_secret]
-        self.class.default_params :client_id => credentials[:client_id]
-        self.class.default_params :client_secret => credentials[:client_secret]
+      @client_id = credentials[:client_id]
+      @client_secret = credentials[:client_secret]
+      @access_token = credentials[:access_token]
+      if @access_token
+        self.class.default_params :oauth_token => @access_token
+      elsif @client_id and @client_secret
+        self.class.default_params :client_id => @client_id
+        self.class.default_params :client_secret => @client_secret
       else
         raise "Must provide access_token or client_id and client_secret"
       end

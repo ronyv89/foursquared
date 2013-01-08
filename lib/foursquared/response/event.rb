@@ -3,21 +3,73 @@ module Foursquared
     # Event response
     class Event
       attr_reader :client, :response
+      
       def initialize client, response
         @client  = client
         @response = response
       end
 
-      [:id, :name, :url, :stats].each do |method_name|
-        define_method method_name do
-          response[method_name.to_s] if response
-        end
+
+      # The ID of the event
+      # @return [String]
+      def id
+        response["id"]
       end
 
-      [:venueId, :foreignIds, :categories, :allDay, :timeZone, :unlockMessage].each do |method_name|
-        define_method method_name.to_usym do
-          response[method_name.to_s] if response[method_name.to_s]
-        end
+      # The name of the event
+      # @return [String]
+      def name
+        response["name"]
+      end
+
+      # The website for the event
+      # @return [String]
+      def url
+        response["url"]
+      end
+
+      # The stats for the event
+      # @return [String]
+      def stats
+        response["stats"]
+      end
+
+      # The ID of the venue of the event
+      # @return [String]
+      def venue_id
+        response["venueId"]
+      end
+
+      # The count of ids of this event in third-party services, plus items, an array of domain, the third party provider, and id, the id in their system. 
+      # @return [Hash]
+      def foreign_ids
+        response["foreignIds"]
+      end
+
+      # The categories that have been applied to this event
+      # @return [Array<Foursquared::Response::Category>]
+      def categories
+        @categories = response["categories"]
+        @categories.map!{|category| Foursquared::Response::Category.new(client, category)} if @categories
+        @categories
+      end
+
+      # Whether the event happens throughout the day
+      # @return [Boolean]
+      def all_day?
+        response["allDay"]
+      end
+
+      # The time zone for the event 
+      # @return [String]
+      def time_zone
+        response["timeZone"]
+      end
+
+      # The unlock message for the checkin at the event
+      # @return [String]
+      def unlock_message
+        response["unlockMessage"]
       end
 
       # The time at which the event starts

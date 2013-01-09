@@ -1,18 +1,11 @@
 require 'httmultiparty'
 require 'json'
 directory = File.expand_path(File.dirname(__FILE__))
-require 'core_ext/symbol'
 module Foursquared
   class << self
 
-    
     attr_accessor :client_id, :client_secret, :api_version, :ssl, :access_token, :locale 
-
-
-    def configure
-      yield self
-      true
-    end
+    
   end
 
   # require 'foursquare2/campaigns'

@@ -27,7 +27,7 @@ module Foursquared
     # @return [Foursquared::Response::Checkin] A checkin object
     def add_checkin options={}
       response = post("/checkins/add", options)["response"]
-      {:checkin => Foursquared::Response::Checkin.new(self, response["checkin"]), :notifications => Foursquared::Response::Notifications.new(self, response["notifications"])}
+      {:checkin => Foursquared::Response::Checkin.new(self, response["checkin"]), :notifications => response["notifications"]}
     end
 
     # Recent checkins by friends
@@ -45,9 +45,10 @@ module Foursquared
     # @param [String] checkin_id The ID of the checkin to get likes for.
     # @return [Hash] A count and groups of users who like this checkin
     def checkin_likes checkin_id
-      response = get("/checkins/#{checkin_id}/likes")["response"]
-      @likes = response["likes"]
-      @likes.groups.each{|group| group["items"].map!{|item|Foursquared::Response::User.new(self, item)}}
+      @likes = get("/checkins/#{checkin_id}/likes")["response"]["likes"]
+      @likes["groups"].each do |group|
+        group["items"].map!{|item|Foursquared::Response::User.new(self, item)}
+      end
       @likes
     end
 

@@ -57,26 +57,11 @@ describe Foursquared::Badges do
 
   subject { foursquared_test_client }
 
-  before(:each) do
-    stub_request(:get, "https://api.foursquare.com/v2/users/self/badges?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => user_badges.to_json, :headers => {})
-    stub_request(:get, "https://api.foursquare.com/v2/badges/4f7a7d3ae4b02f1b2c869efb?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
+  describe "#badge" do
+    it "should return the badge with the given badge ID" do
+      stub_request(:get, "https://api.foursquare.com/v2/badges/4f7a7d3ae4b02f1b2c869efb?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => badge.to_json, :headers => {})
-    @user_badges = subject.user_badges("self")
-  end
-  describe "#user_badges" do
-    describe "sets" do
-      it "should give the sets of badge types" do
-        @user_badges["sets"]["groups"].should each { |group|
-          group.should be_a(Foursquared::Response::BadgeGroup)
-        }
-      end
-    end
-    describe "badges" do
-      it "should give the badges' details" do
-        @user_badges["badges"].keys.should each {|badge_id|
-          @user_badges["badges"][badge_id].should be_a(Foursquared::Response::Badge)
-        }
-      end
+      subject.badge("4f7a7d3ae4b02f1b2c869efb").should be_a(Foursquared::Response::Badge)
     end
   end
 end

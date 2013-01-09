@@ -1,8 +1,4 @@
-# require 'foursquared/users'
-# require 'foursquared/lists'
-# require 'foursquared/venues'
-# require 'foursquared/photos'
-# require 'foursquared/client'
+
 require 'spec_helper'
 require 'pp'
 describe Foursquared::Users do

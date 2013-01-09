@@ -1,6 +1,6 @@
 require "simplecov"
 require "simplecov-rcov"
-require 'foursquared'
+
 require 'webmock/rspec'
 require 'rspec_multi_matchers'
 
@@ -10,8 +10,9 @@ SimpleCov.start do
   add_filter "spec"
 end if ENV["COVERAGE"]
 
+require 'foursquared'
 def foursquared_test_client
-  Foursquared::Client.new("TestToken")
+  Foursquared::Client.new({:access_token => "TestToken"})
 end
 
 class Array

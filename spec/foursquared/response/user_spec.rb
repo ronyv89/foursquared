@@ -3,7 +3,6 @@ require 'foursquared/response/user'
 require 'foursquared/response/list'
 
 require 'foursquared/client'
-require 'core_ext/symbol'
 describe Foursquared::Response::User do
   let(:me) do
     YAML.load(%{

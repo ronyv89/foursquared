@@ -24,7 +24,7 @@ module Foursquared
     # @option options [String] :llAcc Accuracy of the user's latitude and longitude, in meters
     # @option options [String] :alt Altitude of the user's location, in meters.
     # @option options [String] :altAcc Vertical accuracy of the user's location, in meters.
-    # @return [Foursquared::Response::Checkin] A checkin object
+    # @return [Hash] A checkin object and the post checkin notifications
     def add_checkin options={}
       response = post("/checkins/add", options)["response"]
       {:checkin => Foursquared::Response::Checkin.new(self, response["checkin"]), :notifications => response["notifications"]}

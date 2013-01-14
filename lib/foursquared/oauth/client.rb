@@ -28,6 +28,7 @@ module Foursquared
 
       # Step 2: Get access token after authorizing user
       # @param [String] code The value extracted from the callback url param 'code'
+      # @return [String] the access token
       def get_access_token code
         token = oauth_client.auth_code.get_token(code, :redirect_uri => callback_url)
         @access_token = token.token

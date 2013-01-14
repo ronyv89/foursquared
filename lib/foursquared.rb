@@ -18,6 +18,7 @@ module Foursquared
   require 'foursquared/events'
   require 'foursquared/pages'
   require 'foursquared/specials'
+  require 'foursquared/settings'
   require 'foursquared/tips'
   require 'foursquared/oauth/client'
   require 'foursquared/client'

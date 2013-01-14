@@ -85,7 +85,7 @@ describe Foursquared::Checkins do
 
   describe "#recent_checkins" do
     it "should return the recent checkins for the acting user" do
-       stub_request(:get, "https://api.foursquare.com/v2/checkins/recent?oauth_token=TestToken&v=20130109").to_return(:status => 200, :body => recent_checkins.to_json, :headers => {})
+       stub_request(:get, "https://api.foursquare.com/v2/checkins/recent?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => recent_checkins.to_json, :headers => {})
       subject.recent_checkins.should each {|checkin|
         checkin.should be_a Foursquared::Response::Checkin
       }
@@ -94,7 +94,7 @@ describe Foursquared::Checkins do
 
   describe "#checkin_likes" do
     before :each do
-      stub_request(:get, "https://api.foursquare.com/v2/checkins/502bcde16de4146b7f104ac6/likes?oauth_token=TestToken&v=20130109").to_return(:status => 200, :body => checkin_likes.to_json, :headers => {})
+      stub_request(:get, "https://api.foursquare.com/v2/checkins/502bcde16de4146b7f104ac6/likes?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").to_return(:status => 200, :body => checkin_likes.to_json, :headers => {})
     end
 
     it "should have count, groups and a summary" do

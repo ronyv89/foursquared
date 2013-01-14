@@ -247,6 +247,22 @@ module Foursquared
         response["specialsNearby"].map{|special| Foursquared::Response::Special.new(client, special)} if response["specialsNearby"]
       end
 
+      # Checkin at this venue
+      # @param [Hash] options
+      # @option options [String] :eventId The event the user is checking in to.
+      # @option options [String] :shout A message about your check-in
+      # @option options [String] :mentions Semicolon-delimited list of mentions
+      # @option options [String] :broadcast Who to broadcast this check-in to
+      # @option options [String] :ll Latitude and longitude of the user's location.
+      # @option options [String] :llAcc Accuracy of the user's latitude and longitude, in meters
+      # @option options [String] :alt Altitude of the user's location, in meters.
+      # @option options [String] :altAcc Vertical accuracy of the user's location, in meters.
+      # @return [Hash] A checkin object and the post checkin notifications
+      def checkin options={}
+        options.merge!({:venueId => id})
+        checkin_response = post("/checkins/add", options)["response"]
+        {:checkin => Foursquared::Response::Checkin.new(self, checkin_response["checkin"]), :notifications => response["notifications"]}
+      end
     end
   end
 end

@@ -13,6 +13,9 @@ module Foursquared
     include Badges
     include Events
     include Pages
+    include Specials
+    include Settings
+    include Tips
     base_uri 'https://api.foursquare.com/v2/'
     format :json
     

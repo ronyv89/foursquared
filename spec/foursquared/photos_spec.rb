@@ -33,7 +33,7 @@ describe Foursquared::Photos do
   end
 
   before :each do
-    stub_request(:get, "https://api.foursquare.com/v2/photos/12345?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
+    stub_request(:get, "https://api.foursquare.com/v2/photos/4d0fb8162d39a340637dc42b?oauth_token=TestToken&v=#{Time.now.strftime("%Y%m%d")}").
          to_return(:status => 200, :body => photo.to_json, :headers => {})
   end
 

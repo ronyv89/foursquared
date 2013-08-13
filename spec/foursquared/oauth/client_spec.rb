@@ -24,7 +24,7 @@ describe Foursquared::OAuth::Client do
 
   describe '#get_access_token' do
     it "should return the access code" do
-      stub_request(:post, "https://foursquare.com/oauth2/access_token").with(:body => {"client_id"=>"abc", "client_secret"=>"S2TJO3KFFXZSXS44WKVGWGKH204U455MI3P0JUV0ADTWRORZ", "code"=>"hello", "grant_type"=>"authorization_code", "redirect_uri"=>"http://localhost"},:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Faraday v0.8.8'}).to_return(:status => 200, :body => {:access_token => "TestToken"}.to_json, :headers => {"content-type"          =>  "application/json"})
+      stub_request(:post, "https://foursquare.com/oauth2/access_token").with(:body => {"client_id"=>"abc", "client_secret"=>"S2TJO3KFFXZSXS44WKVGWGKH204U455MI3P0JUV0ADTWRORZ", "code"=>"hello", "grant_type"=>"authorization_code", "redirect_uri"=>"http://localhost"},:headers => {'Accept'=>'*/*', 'User-Agent'=>'Faraday v0.8.8'}).to_return(:status => 200, :body => {:access_token => "TestToken"}.to_json, :headers => {"content-type"          =>  "application/json"})
       @client.get_access_token("hello").should == "TestToken"
     end
   end

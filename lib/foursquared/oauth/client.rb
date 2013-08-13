@@ -3,7 +3,7 @@ module Foursquared
   # OAuth module
   module OAuth
     # OAuth Client class
-    class Client     
+    class Client
       attr_accessor :client_id, :client_secret, :oauth_client, :callback_url, :access_token
       def initialize(client_id, client_secret, callback_url, opts={}, &block)
         @client_id = client_id
@@ -30,7 +30,8 @@ module Foursquared
       # @param [String] code The value extracted from the callback url param 'code'
       # @return [String] the access token
       def get_access_token code
-        token = oauth_client.auth_code.get_token(code, :redirect_uri => callback_url)
+        p oauth_client
+        p token = oauth_client.auth_code.get_token(code, :redirect_uri => callback_url)
         @access_token = token.token
       end
     end
